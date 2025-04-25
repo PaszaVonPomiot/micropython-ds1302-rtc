@@ -8,7 +8,7 @@ This has been tested and working on ESP32 but should work with any micropython s
 
 DS1302 is real-time clock (RTC) with serial interface, 31 * 8 data ram.
 
-![](ds1302.jpg)
+![](assets/images/ds1302.jpg)
 
 
 ## API
