@@ -14,7 +14,7 @@ A pure MicroPython driver for the DS1302 real-time clock (RTC) module.
 
 ## Overview
 
-The DS1302 is a real-time clock (RTC) integrated circuit with a simple serial interface and 31 bytes of battery-backed SRAM.  
+The DS1302 is a real-time clock (RTC) integrated circuit with a simple serial interface and 31 bytes of battery-backed SRAM. 
 It keeps track of second, minute, hour, day, day of the week, month, and year with leap-year compensation up to the year 2100.
 
 This project provides a pure MicroPython driver to interface with the DS1302 module.
@@ -93,7 +93,8 @@ from machine import Pin  # type: ignore[import]
 rtc = DS1302(clk=Pin(0), dat=Pin(1), rst=Pin(2))
 
 # Set the date and time: [year, month, day, weekday, hour, minute, second]
-rtc.set_date_time([2025, 4, 26, 6, 14, 30, 0])  # Saturday, 14:30:00
+# Eg. 2025-04-26 14:30:00, Saturday (6th day of the week)
+rtc.set_date_time([2025, 4, 26, 6, 14, 30, 0])  
 
 # Alternatively, set the date and time using individual components
 rtc.set_year(2084)
