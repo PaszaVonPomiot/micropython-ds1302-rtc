@@ -11,7 +11,7 @@ class _Reg:  # 8-bit register addresses
     YEAR = 0x8C
     WP = 0x8E  # Write protect register
     CTRL = 0x90  # Control register
-    RAM = 0xC0  # RAM register (0xC0-0xFF)
+    RAM = 0xC0  # RAM base register (0xC0-0xFF)
 
 
 class DS1302:
