@@ -110,8 +110,8 @@ class DS1302:
         self._wr(_Reg.YEAR, self._dec2bcd(value % 100))
         return None
 
-    def date_time(self, datetime: list[int|None] | None = None) -> list[int|None] | None:
-        if datetime is None:
+    def date_time(self, date_time: list[int|None] | None = None) -> list[int|None] | None:
+        if date_time is None:
             return [
                 self.year(),
                 self.month(),
@@ -121,13 +121,13 @@ class DS1302:
                 self.minute(),
                 self.second(),
             ]
-        self.year(datetime[0])
-        self.month(datetime[1])
-        self.day(datetime[2])
-        self.weekday(datetime[3])
-        self.hour(datetime[4])
-        self.minute(datetime[5])
-        self.second(datetime[6])
+        self.year(date_time[0])
+        self.month(date_time[1])
+        self.day(date_time[2])
+        self.weekday(date_time[3])
+        self.hour(date_time[4])
+        self.minute(date_time[5])
+        self.second(date_time[6])
         return None
 
     def ram(self, register: int, value: int | None = None) -> int | None:
