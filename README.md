@@ -4,7 +4,7 @@ A pure MicroPython driver for the DS1302 real-time clock (RTC) module.
 # Dirver documentation
 The DS1302 is a real-time clock (RTC) with a simple serial interface.
 
-![](assets/images/ds1302.jpg)
+![](assets/images/ds1302.webp)
 
 ## API Reference
 
@@ -17,49 +17,72 @@ The DS1302 is a real-time clock (RTC) with a simple serial interface.
 - **`stop()`**  
   Stop/pause the RTC.
 
-- **`date_time(date_time=None)`**  
+- **`get_date_time()` / `set_date_time(date_time)`**  
   Get or set the full date and time.  
-  - Without parameters: returns current `[year, month, day, weekday, hour, minute, second]`.
-  - With a list parameter: sets the datetime.
+  - `get_date_time()`: returns current `[year, month, day, weekday, hour, minute, second]`.
+  - `set_date_time(list)`: sets the datetime.
 
-- **`year(value=None)`**  
+- **`get_year()` / `set_year(value)`**  
   Get or set the year.
 
-- **`month(value=None)`**  
+- **`get_month()` / `set_month(value)`**  
   Get or set the month.
 
-- **`day(value=None)`**  
+- **`get_day()` / `set_day(value)`**  
   Get or set the day.
 
-- **`weekday(value=None)`**  
+- **`get_weekday()` / `set_weekday(value)`**  
   Get or set the weekday.
 
-- **`hour(value=None)`**  
+- **`get_hour()` / `set_hour(value)`**  
   Get or set the hour.
 
-- **`minute(value=None)`**  
+- **`get_minute()` / `set_minute(value)`**  
   Get or set the minute.
 
-- **`second(value=None)`**  
+- **`get_second()` / `set_second(value)`**  
   Get or set the second.
 
-- **`ram(register, data_byte=None)`**  
+- **`get_ram(register)` / `set_ram(register, value)`**  
   Get or set RAM data (up to 31 bytes).
 
 ## Example Usage
 
 ```python
 from ds1302 import DS1302
-from machine import Pin
+from machine import Pin  # type: ignore[import]
 
+# Initialize DS1302 RTC with the appropriate GPIO pins
 rtc = DS1302(clk=Pin(0), dat=Pin(1), rst=Pin(2))
-rtc.date_time([2018, 3, 9, 4, 23, 0, 1])  # Set date and time
 
-current_datetime = rtc.date_time()
-current_time = f"{rtc.hour()}:{rtc.minute()}:{rtc.second()}"
+# Set the date and time: [year, month, day, weekday, hour, minute, second]
+rtc.set_date_time([2084, 4, 26, 6, 14, 30, 0])  # Saturday, 14:30:00
 
-print(current_datetime)  # [2018, 3, 9, 4, 23, 0, 1]
-print(current_time)      # 23:0:1
+# Or set the date and time using individual components
+rtc.set_year(2025)
+
+# Read the full date and time
+print("Current date and time:", rtc.get_date_time())
+# Output: [2025, 4, 26, 6, 14, 30, 0]
+
+# Read individual components
+year = rtc.get_year()
+month = rtc.get_month()
+day = rtc.get_day()
+weekday = rtc.get_weekday()
+hour = rtc.get_hour()
+minute = rtc.get_minute()
+second = rtc.get_second()
+
+print(f"Year: {year}, Month: {month}, Day: {day}, Weekday: {weekday}")
+print(f"Time: {hour:02}:{minute:02}:{second:02}")
+
+# Save a 1-byte value (0-255) into one of RAM registers (0-30)
+rtc.set_ram(register=30, value=255)
+
+# Read the value back from RAM register
+ram_reg_30 = rtc.get_ram(register=30)
+print("Value from RAM:", ram_reg_30)
 ```
 
 ## Acknowledgements
