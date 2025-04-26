@@ -1,66 +1,68 @@
 # Micorpython DS1302 RTC Clock driver
-This is a pure Micropython DS1302 RTC Clock driver. This is based on microbit code of microbit-lib https://github.com/shaoziyang/microbit-lib
-
-This has been tested and working on ESP32 but should work with any micropython supported device.
+A pure MicroPython driver for the DS1302 real-time clock (RTC) module.
 
 # Dirver documentation
-(Adapted from https://github.com/shaoziyang/microbit-lib/blob/master/misc/DS1302/README.md)
-
-DS1302 is real-time clock (RTC) with serial interface, 31 * 8 data ram.
+The DS1302 is a real-time clock (RTC) with a simple serial interface.
 
 ![](assets/images/ds1302.jpg)
 
+## API Reference
 
-## API
-* **\_\_init\_\_(clk, dio, cs)**  
-set i/o pins
+- **`__init__(clk, dat, rst)`**  
+  Initialize the DS1302 with clock, data, and reset pins.
 
-* **start()**  
-start RTC.  
+- **`start()`**  
+  Start the RTC.
 
-* **stop()**  
-stop/pause RTC
+- **`stop()`**  
+  Stop/pause the RTC.
 
-* **date_time(DT = None)**  
-get / set DateTime. If no paramter given, it will return current datetime, otherwise it will set datatime.  
-datatime format: [Year, month, day, weekday, hour, minute, second]
+- **`date_time(date_time=None)`**  
+  Get or set the full date and time.  
+  - Without parameters: returns current `[year, month, day, weekday, hour, minute, second]`.
+  - With a list parameter: sets the datetime.
 
-* **year(year = None)**  
-get / set year.  
+- **`year(value=None)`**  
+  Get or set the year.
 
-* **month(month = None)**  
-get / set month.  
+- **`month(value=None)`**  
+  Get or set the month.
 
-* **day(day = None)**  
-get / set day.  
+- **`day(value=None)`**  
+  Get or set the day.
 
-* **weekday(weekday = None)**  
-get / set month.  
+- **`weekday(value=None)`**  
+  Get or set the weekday.
 
-* **hour(hour = None)**  
-get / set hour.  
+- **`hour(value=None)`**  
+  Get or set the hour.
 
-* **minute(minute = None)**  
-get / set minute.  
+- **`minute(value=None)`**  
+  Get or set the minute.
 
-* **second(second = None)**  
-get / set second.  
+- **`second(value=None)`**  
+  Get or set the second.
 
-* **ram(reg, dat = None)**  
-get / set ram data (31 bytes).  
+- **`ram(register, data_byte=None)`**  
+  Get or set RAM data (up to 31 bytes).
 
+## Example Usage
 
-## example
-
-```
+```python
+from ds1302 import DS1302
 from machine import Pin
-import ds1302
 
-ds = ds1302.DS1302(Pin(5),Pin(18),Pin(19))
+rtc = DS1302(clk=Pin(0), dat=Pin(1), rst=Pin(2))
+rtc.date_time([2018, 3, 9, 4, 23, 0, 1])  # Set date and time
 
-ds.date_time() # returns the current datetime.
-ds.date_time([2018, 3, 9, 4, 23, 0, 1, 0]) # set datetime.
+current_datetime = rtc.date_time()
+current_time = f"{rtc.hour()}:{rtc.minute()}:{rtc.second()}"
 
-ds.hour() # returns hour.
-ds.second(10) # set second to 10.
+print(current_datetime)  # [2018, 3, 9, 4, 23, 0, 1]
+print(current_time)      # 23:0:1
 ```
+
+## Acknowledgements
+Thanks to previous authors and contributors:
+- https://github.com/shaoziyang
+- https://github.com/omarbenhamid
