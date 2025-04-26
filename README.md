@@ -6,6 +6,10 @@ The DS1302 is a real-time clock (RTC) with a simple serial interface.
 
 ![](assets/images/ds1302.jpg)
 
+## Installation
+- Copy `lib` folder from repository to your device (eg. Pico, ESP32, STM32)
+- If your MicroPython port does not check lib folder your can copy `ds1302.py` file directly to your device
+
 ## API Reference
 
 - **`__init__(clk, dat, rst)`**  
