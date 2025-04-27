@@ -36,14 +36,14 @@ class DS1302:
         self.pin_dat.init(Pin.OUT)
         for i in range(8):
             self.pin_dat.value((data_byte >> i) & 1)
-            self._clk_cycle
+            self._clk_cycle()
 
     def _read_byte(self) -> int:
         data_byte = 0
         self.pin_dat.init(Pin.IN)
         for i in range(8):
             data_byte |= self.pin_dat.value() << i
-            self._clk_cycle
+            self._clk_cycle()
         return data_byte
 
     def _get_register(self, register: int) -> int:
